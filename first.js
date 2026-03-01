@@ -142,7 +142,7 @@ class Person {
     this.age = age;
     this.occupation = occupation;
   }
-    introduce() {
+  introduce() {
     console.log("Hello, my name is " + this.name + ", I am " + this.age + " years old and I work as a " + this.occupation + ".");
   }
   getOccupation() {
@@ -153,6 +153,15 @@ class Person {
   }
   getName() {
     return this.name;
+  }
+  setOccupation(newOccupation) {
+    this.occupation = newOccupation;
+  }
+  setAge(newAge) {
+    this.age = newAge;
+  }
+  setName(newName) {
+    this.name = newName;
   }
 }
 
@@ -169,7 +178,55 @@ const personArray = [
   new Person("Eve", 32, "Manager"),
 ];
 
+console.log("All people:");
+personArray.forEach(person => person.introduce());
 
+const sortedByAge = [...personArray].sort((a, b) => a.getAge() - b.getAge());
+console.log("People sorted by age:");
+sortedByAge.forEach(person => person.introduce());
+
+const sortedByName = [...personArray].sort((a, b) => a.getName().localeCompare(b.getName()));
+console.log("People sorted by name:");
+sortedByName.forEach(person => person.introduce());
+
+const sortedByOccupation = [...personArray].sort((a, b) => a.getOccupation().localeCompare(b.getOccupation()));
+console.log("People sorted by occupation:");
+sortedByOccupation.forEach(person => person.introduce());   
+
+personArray.map(person => person.setAge(person.getAge() + 1));
+console.log("People after increasing age by 1:");
+personArray.forEach(person => console.log(person.getName() + " is now " + person.getAge()));
+
+function sortAscending(arr) {
+  if (typeof arr[0] === "number") {
+    return arr.sort((a, b) => a - b);
+  } else if (typeof arr[0] === "string") {
+    return arr.sort((a, b) => a.localeCompare(b));
+  } else if (typeof arr[0] === "object" && arr[0].name !== undefined) {
+    return arr.sort((a, b) => a.name.localeCompare(b.name));
+  } else {
+    return arr.sort();
+  }
+}
+
+function sortDescending(arr) {
+  if (typeof arr[0] === "number") {
+    return arr.sort((a, b) => b - a);
+  } else if (typeof arr[0] === "string") {
+    return arr.sort((a, b) => b.localeCompare(a));
+  } else if (typeof arr[0] === "object" && arr[0].name !== undefined) {
+    return arr.sort((a, b) => b.name.localeCompare(a.name));
+  } else {
+    return arr.sort().reverse();
+  }
+}
+
+console.log("Sorted ascending: " + sortAscending([5, 2, 9, 1, 5, 6]));
+console.log("Sorted descending: " + sortDescending([5, 2, 9, 1, 5, 6]));
+console.log("Sorted ascending: " + sortAscending(["banana", "apple", "cherry"]));
+console.log("Sorted descending: " + sortDescending(["banana", "apple", "cherry"]));
+console.log("Sorted ascending: " + sortAscending(personArray.map(p => p.getName())));
+console.log("Sorted descending: " + sortDescending(personArray.map(p => p.getName())));
 
 // something();
 // gravity (5.972e24, 7.348e22, 384400000); // Earth and Moon
